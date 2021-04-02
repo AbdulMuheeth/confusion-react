@@ -1,25 +1,25 @@
-import React, {Component} from 'react';
-import { findRenderedDOMComponentWithClass } from 'react-dom/test-utils';
+import React from 'react';
 import {Media} from 'reactstrap';
 import {Card ,CardImg,CardImgOverlay,CardText,CardBody,CardTitle} from 'reactstrap';
 import DishDetail from './DishDetail';
 
-class Menu extends Component{
-    constructor(props){
-        super(props);
+
+function RenderMenuItem ({dish,onClick}){
+
+    return(
+            <Card onClick={() => onClick(dish.id)}> {/* here refers that  each of this element in it going to act list item */}
+                
+                <CardImg width="100%" src={dish.image} alt={dish.name}/>
+                
+                <CardImgOverlay>
+                    <CardTitle>{dish.name}</CardTitle>
+                </CardImgOverlay>
+            </Card>
         
-        this.state={
-            selectedDish:null
-        }
-    }
+    );
+    
 
-    onDishSelect(dish){
-        console.log(dish);
-
-        this.setState({
-            selectedDish:dish
-        });
-    }
+}    
 
     // renderDish(dish){
     //     if(dish != null){
@@ -44,25 +44,16 @@ class Menu extends Component{
 
     // }
 
-    render(){
-        const menu = this.props.dishes.map((dish) =>{
-            return(
+    const Menu = (props) => {  //this is another way of implementing the functional component
+        
+        const menu = props.dishes.map((dish) =>{
+            return(        
                 <div key={dish.id} className="col-12 col-md-5 m-1">
-                    <Card onClick={() => this.onDishSelect(dish)}> {/* here refers that  each of this element in it going to act list item */}
-                        
-                        <CardImg width="100%" src={dish.image} alt={dish.name}/>
-                        
-                        <CardImgOverlay>
-                            <CardTitle>{dish.name}</CardTitle>
-                        </CardImgOverlay>
-                    
-                    </Card>
+                        <RenderMenuItem dish={dish} onClick={props.onClick}></RenderMenuItem>
                 </div>
-
-
             );
         });
-        return(
+        return( 
             <div className="container">
                 <div className="row">
                     {/* <Media list>
@@ -70,13 +61,12 @@ class Menu extends Component{
                     </Media> */}
                     {menu}
                 </div>
-                <div>
-                    {/* {this.renderDish(this.state.selectedDish)} */}
-                    <DishDetail dish={this.state.selectedDish} />
-                </div>
             </div>
         );
+
+
     }
-}
+        
+ 
 
 export default Menu;
