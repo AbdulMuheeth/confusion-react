@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { findRenderedDOMComponentWithClass } from 'react-dom/test-utils';
 import {Media} from 'reactstrap';
 import {Card ,CardImg,CardImgOverlay,CardText,CardBody,CardTitle} from 'reactstrap';
+import DishDetail from './DishDetail';
 
 class Menu extends Component{
     constructor(props){
@@ -13,33 +14,35 @@ class Menu extends Component{
     }
 
     onDishSelect(dish){
+        console.log(dish);
+
         this.setState({
             selectedDish:dish
-        })
+        });
     }
 
-    renderDish(dish){
-        if(dish != null){
-            return(
-                <Card>
-                    <CardImg width="100%" src={dish.image} alt={dish.name}/>
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardBody>{dish.description}</CardBody>
-                    </CardBody>
+    // renderDish(dish){
+    //     if(dish != null){
+    //         return(
+    //             <Card>
+    //                 <CardImg width="100%" src={dish.image} alt={dish.name}/>
+    //                 <CardBody>
+    //                     <CardTitle>{dish.name}</CardTitle>
+    //                     <CardBody>{dish.description}</CardBody>
+    //                 </CardBody>
 
-                </Card>
+    //             </Card>
 
-            )
-        }
+    //         )
+    //     }
 
-        else{
-            return(
-                <div></div>
-            );
-        }
+    //     else{
+    //         return(
+    //             <div></div>
+    //         );
+    //     }
 
-    }
+    // }
 
     render(){
         const menu = this.props.dishes.map((dish) =>{
@@ -51,7 +54,6 @@ class Menu extends Component{
                         
                         <CardImgOverlay>
                             <CardTitle>{dish.name}</CardTitle>
-                            
                         </CardImgOverlay>
                     
                     </Card>
@@ -69,7 +71,8 @@ class Menu extends Component{
                     {menu}
                 </div>
                 <div>
-                    {this.renderDish(this.state.selectedDish)}
+                    {/* {this.renderDish(this.state.selectedDish)} */}
+                    <DishDetail dish={this.state.selectedDish} />
                 </div>
             </div>
         );
