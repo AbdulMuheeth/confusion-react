@@ -35,3 +35,8 @@ address{
 .navbar-dark {
     background-color: #105fa8;
 }
+
+
+.breadcrumb-item {
+    list-style: none;
+}

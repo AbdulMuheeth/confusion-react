@@ -24,7 +24,7 @@ export default class Header extends Component {
                 <Navbar dark expand="md">
                     <div className="container row">
                         <NavbarToggler onClick={this.toggleNav}/> {/*Here no parenthesis/ no arrow function is given because of the .bind(this) in constructor*/}
-                        <NavbarBrand className="mr-auto" href="/">
+                        <NavbarBrand className="ml-auto" href="/">
                             <img src="assets/images/logo.png" height="30" width="41" alt="Ristorante Con Fusion"/>
                         </NavbarBrand>
                         <Collapse isOpen={this.state.isNavOpen} className="collapse navbar-collapse">
