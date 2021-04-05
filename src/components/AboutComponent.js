@@ -3,30 +3,39 @@ import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'r
 import { Link } from 'react-router-dom';
 
 
+function RenderLeader(props){
+
+    return(
+        props.lead.map((leader)=>{
+            return (
+            
+                <div key={leader.id} className="col-12 mt-5">
+                    <Media tag="li">
+    
+                        <Media>
+                            <Media object src={leader.image} alt={leader.name}>
+                            </Media>
+    
+                            <Media body className="ml-5">
+                                <Media heading>{leader.name}</Media>
+                                <Media>{leader.designation}</Media>
+                                <p>{leader.description}</p>
+                            </Media>
+                        </Media>
+                    </Media>
+                     
+                </div>
+            );
+        })
+    
+    );
+
+}
+
+
 function About(props) {
 
     console.log(props.leaders);
-    const leaders = props.leaders.map((leader) => {
-        return (
-            
-            <div key={leader.id} className="col-12 mt-5">
-                <Media tag="li">
-
-                    <Media>
-                        <Media object src={leader.image} alt={leader.name}>
-                        </Media>
-
-                        <Media body className="ml-5">
-                            <Media heading>{leader.name}</Media>
-                            <Media>{leader.designation}</Media>
-                            <p>{leader.description}</p>
-                        </Media>
-                    </Media>
-                </Media>
-                 
-            </div>
-        );
-    });
 
     return(
         <div className="container">
@@ -83,7 +92,7 @@ function About(props) {
                     <h2>Corporate Leadership</h2>
                 </div>
                 <div className="col-12">
-                        {leaders}
+                        <RenderLeader lead={props.leaders}/>
                 </div>
             </div>
         </div>
