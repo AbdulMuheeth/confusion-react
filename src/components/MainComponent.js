@@ -8,7 +8,7 @@ import Footer from './FooterComponent';
 import {Switch,Route,Redirect,withRouter} from 'react-router-dom';
 import About from './AboutComponent';
 import {connect} from 'react-redux';
-
+import {addComment} from '../redux/ActionCreators';
 
 const mapStateToProps = state =>{
   return {
@@ -20,6 +20,11 @@ const mapStateToProps = state =>{
   }
 }
 
+//useSelector alternative I think
+const mapDispatchToProps = (dispatch) => ({
+  addComment: (dishId,rating,author,comment) => dispatch(addComment (dishId,rating,author,comment))
+  //dispatch is a function of the Redux store. You call store. dispatch to dispatch an action. This is the only way to trigger a state change
+})
 
 class Main extends Component {
 
@@ -47,6 +52,7 @@ class Main extends Component {
           return(
             <DishDetail dish={this.props.dishes.filter((dish)=> dish.id === parseInt(match.params.dishId,10))[0]}
                 comments={this.props.comments.filter((comment)=>comment.dishId == parseInt(match.params.dishId,10))}
+                addComment={this.props.addComment}
             />
         );
     }
@@ -70,4 +76,4 @@ class Main extends Component {
   
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Main));
