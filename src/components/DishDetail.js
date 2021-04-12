@@ -4,16 +4,7 @@ import dateFormat from 'dateformat';
 import {Link} from 'react-router-dom'
 import { Button, Modal } from 'reactstrap';
 import { Control, Errors, LocalForm } from 'react-redux-form';
-
-    // allComments(dish){
-    //     dish.comments.map((comment)=> {
-    //         return(
-    //             console.log(comment.comment)
-    //         );
-
-    //     }
-    //     )
-    // }
+import Loading from './LoadingComponent';
 
 const required = val => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len ;
@@ -181,23 +172,42 @@ class CommentForm extends Component{
 
     const DishDetail=(props)=>{
 
-        return (
-            <div>
+        if(props.isLoading) {
+            return (
                 <div className="row">
-                        <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
-                        <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
-                        <div className="col-12">
-                            <h3>{props.dish.name}</h3>
-                            <hr />
-                        </div>
+                    <Loading/>
                 </div>
-                <div className="row mb-2">
-                <RenderDish dish={props.dish}/>
-                <RenderComments comment={props.comments} addComment={props.addComment} dishId={props.dish.id}/>
+            );
+        }
+        else if(props.errMess){
+            return(
+                <div className="container">
+                    <div className="row">
+                        <h4>{props.errMess}</h4>
+                    </div>
                 </div>
-                
-            </div>
-        );
+            );
+        }
+        else if(props.dish != null){
+            return (
+                <div>
+                    <div className="row">
+                            <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                            <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                            <div className="col-12">
+                                <h3>{props.dish.name}</h3>
+                                <hr />
+                            </div>
+                    </div>
+                    <div className="row mb-2">
+                    <RenderDish dish={props.dish}/>
+                    <RenderComments comment={props.comments} addComment={props.addComment} dishId={props.dish.id}/>
+                    </div>
+                    
+                </div>
+            );
+        }
+        
     }
 
 
