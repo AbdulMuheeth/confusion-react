@@ -4,7 +4,7 @@ import {Card ,CardImg,CardImgOverlay,CardText,CardBody,CardTitle,Breadcrumb,Brea
 import DishDetail from './DishDetail';
 import {Link} from "react-router-dom";
 import LoadingComponent from './LoadingComponent';
-
+import {baseUrl} from '../shared/baseUrl';
 
 function RenderMenuItem ({dish,onClick}){
 
@@ -13,7 +13,7 @@ function RenderMenuItem ({dish,onClick}){
             <Link to={`/menu/${dish.id}`}>
                 <Card> {/* here refers that  each of this element in it going to act list item */}
                     
-                    <CardImg width="100%" src={dish.image} alt={dish.name}/>
+                    <CardImg width="100%" src={baseUrl+dish.image} alt={dish.name}/>
                     
                     <CardImgOverlay>
                         <CardTitle>{dish.name}</CardTitle>
