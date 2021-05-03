@@ -6,6 +6,7 @@ import { Button, Modal } from 'reactstrap';
 import { Control, Errors, LocalForm } from 'react-redux-form';
 import Loading from './LoadingComponent';
 import {baseUrl} from '../shared/baseUrl';
+import {FadeTransform,Fade,Stagger} from 'react-animation-components';
 
 const required = val => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len ;
@@ -31,7 +32,7 @@ class CommentForm extends Component{
         this.togglefunc();
         // console.log(JSON.stringify(values));
         // alert("Current state is : "+JSON.stringify(values));
-        this.props.addComment(this.props.dishId,values.rating,values.name,values.comment);
+        this.props.postComment(this.props.dishId,values.rating,values.name,values.comment);
     }
 
 
@@ -113,14 +114,21 @@ class CommentForm extends Component{
             return(
                 
                     <div className="col-12 col-md-5 offset-md-1 ">
-                    <Card>
-                        <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name}/>
-                        <CardBody>
-                            <CardTitle>{dish.name}</CardTitle>
-                            <CardBody>{dish.description}</CardBody>
-                        </CardBody>
+                    <FadeTransform
+                            in
+                            transformProps={{
+                                exitTransform: 'scale(0.5) translateY(-50%)'
+                            }}>
 
-                    </Card>
+                            <Card>
+                                <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name}/>
+                                <CardBody>
+                                    <CardTitle>{dish.name}</CardTitle>
+                                    <CardBody>{dish.description}</CardBody>
+                                </CardBody>
+                            </Card>
+                    </FadeTransform>
+
                     </div>
                 
             )
@@ -134,32 +142,35 @@ class CommentForm extends Component{
 
     }
 
-    function RenderComments({comment,addComment,dishId}){ 
+    function RenderComments({comment,postComment,dishId}){ 
 
         return(
             <div className="col-12 col-md-5">
                         
             <h4>Comments</h4>
-            
+            <Stagger in>
                 {comment.map((comment)=> {
                 console.log(comment);
 
                 var date= comment.date;
                 return(
+                    <Fade in>
                     <div key={comment.id}>
                         {comment.comment}
                         
                         <p> -- {comment.author},{dateFormat(date,"mmmm dS,yyyy")}</p>
                     </div>
-                    
+                    </Fade>
                 );
 
                 }
                 )}
 
+            </Stagger>
+
                 <div>
 
-                <CommentForm  dishId={dishId} addComment={addComment}/>
+                <CommentForm  dishId={dishId} postComment={postComment}/>
                 </div>
 
             </div>
@@ -201,7 +212,7 @@ class CommentForm extends Component{
                     </div>
                     <div className="row mb-2">
                     <RenderDish dish={props.dish}/>
-                    <RenderComments comment={props.comments} addComment={props.addComment} dishId={props.dish.id}/>
+                    <RenderComments comment={props.comments} postComment={props.postComment} dishId={props.dish.id}/>
                     </div>
                     
                 </div>
